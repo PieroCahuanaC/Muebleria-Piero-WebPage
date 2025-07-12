@@ -1,0 +1,39 @@
+---
+import { supabase } from "../lib/supabase";
+import Layout from "../layouts/Layout.astro";
+import Productos from "../components/Productos";
+import PromoSection from "../components/PromoSection.astro";
+import Carousel from "../components/Carousel.astro";
+import FavoriteProduct from "../components/FavoriteProduct.astro";
+import Benefits from "../components/Benefits.astro";
+import WhatsappCallAction from "../components/WhatsappCallAction.astro";
+import CarritoWrapper from "../components/CarritoWrapper.jsx";
+
+const { data, error } = await supabase.from("Products").select("*");
+
+console.log("Productos:", data);
+console.log("Error:", error);
+
+const pageTitle = "Inicio";
+---
+
+<Layout pageTitle={pageTitle}>
+  <Carousel />
+  <h2 class="text-2xl sm:text-3xl md:text-4xl font-light text-center mt-20">
+    Dale estilo a tu hogar
+    <span class="font-bold"> con precios irresistibles.</span>
+  </h2>
+
+  <FavoriteProduct />
+  <PromoSection />
+
+  <h2 class="text-2xl sm:text-3xl md:text-4xl font-light text-center mt-20 mb-20">
+    Todo lo que buscas para comprar fácil
+    <span class="font-bold"> y sin complicaciones.</span>
+  </h2>
+  <Benefits />
+  <WhatsappCallAction />
+
+  <!-- ✅ Isla React unificada -->
+  <CarritoWrapper client:load />
+</Layout>

@@ -1,0 +1,29 @@
+---
+import Layout from "../../layouts/Layout.astro";
+import CarritoWrapper from "../../components/CarritoWrapper.jsx";
+import { supabase } from "../../lib/supabase";
+
+const { id } = Astro.params;
+
+// ✅ Función obligatoria para rutas dinámicas
+export async function getStaticPaths() {
+  const { data, error } = await supabase.from("Products").select("id_product");
+
+  if (error) {
+    console.error("❌ Error obteniendo productos:", error);
+    return []; // si falla, devolvemos array vacío
+  }
+
+  // ✅ Devuelve un ARRAY directamente
+  return data.map((producto) => ({
+    params: { id: String(producto.id_product) },
+  }));
+}
+
+const pageTitle = "Producto";
+---
+
+<Layout pageTitle={pageTitle}>
+  <!-- ✅ Usamos CarritoWrapper con el id -->
+  <CarritoWrapper id={id} client:load />
+</Layout>

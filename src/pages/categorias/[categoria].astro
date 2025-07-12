@@ -1,0 +1,68 @@
+---
+import "/src/styles/global.css";
+import ProductList from "../../components/ProductList.astro";
+import Productos from "../../components/Productos";
+import Layout from "../../layouts/Layout.astro";
+import ProductosCategoria from "../../components/Productos";
+
+export async function getStaticPaths() {
+  return [
+    { params: { categoria: "dormitorio" } },
+    { params: { categoria: "cocina-y-comedor" } },
+    { params: { categoria: "oficina" } },
+  ];
+}
+
+const { categoria } = Astro.params;
+// Datos personalizados para cada categoría
+const dataCategorias = {
+  dormitorio: {
+    titulo: "Dormitorio",
+    imagen: "/categories/dormitorio.jpg",
+    descripcion:
+      "Descubre nuestra selección de muebles cómodos y elegantes para tu dormitorio.",
+  },
+  "cocina-y-comedor": {
+    titulo: "Cocina y Comedor",
+    imagen: "/categories/cocina.jpg",
+    descripcion: "Equipa tu cocina y comedor con estilo y funcionalidad.",
+  },
+  oficina: {
+    titulo: "Oficina",
+    imagen: "/categories/oficina.jpg",
+    descripcion:
+      "Optimiza tu espacio de trabajo con nuestros muebles de oficina modernos.",
+  },
+};
+
+// Extraer la información de la categoría actual
+const categoriaData = dataCategorias[categoria] || {
+  titulo: "Categoría no encontrada",
+  imagen: "/images/default.jpg",
+  descripcion: "No se encontró la categoría seleccionada.",
+};
+---
+
+<Layout pageTitle={categoria}>
+  <div class="flex flex-col items-center justify-center h-auto text-center p-6">
+    <img
+      src={categoriaData.imagen}
+      alt={categoriaData.titulo}
+      class="w-full h-120 object-cover shadow-lg mb-18 mt-5"
+    />
+  </div>
+  <div
+    class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-black/50 text-white px-4 py-2 rounded-lg"
+  >
+    <h1
+      class="text-xl sm:text-2xl md:text-3xl lg:text-4xl font-bold font-serif text-center"
+    >
+      {categoriaData.titulo}
+    </h1>
+    <p class="text-sm sm:text-base md:text-lg mt-2 font-serif text-justify">
+      {categoriaData.descripcion}
+    </p>
+  </div>
+
+  <ProductosCategoria categoria={categoria} client:load />
+</Layout>
