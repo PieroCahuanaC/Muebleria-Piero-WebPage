@@ -17,7 +17,8 @@ const ProductOverview = ({ id }) => {
     return null;
   }
 
-  const { cart, addToCart } = cartContext;
+  const { cart, addToCart, openCart } = cartContext;
+
 
   useEffect(() => {
     fetch(`/api/products?id_product=${id}`)
@@ -51,6 +52,8 @@ const ProductOverview = ({ id }) => {
 
     console.log("🛒 Enviando producto al carrito:", newProduct);
     addToCart(newProduct);
+    openCart(); // ✅ Abre el modal automáticamente
+    
   };
 
   return (

@@ -6,7 +6,14 @@ import ProductOverview from "./ProductOverview.jsx";
 export default function CarritoWrapper({ id }) {
   return (
     <CartProvider>
-      {id ? <ProductOverview id={id} /> : <CartButton />}
+      {id ? (
+        <>
+          <CartButton />
+          <ProductOverview id={id} />
+        </>
+      ) : (
+        <CartButton />
+      )}
     </CartProvider>
   );
 }

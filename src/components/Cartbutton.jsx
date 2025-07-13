@@ -1,10 +1,9 @@
 "use client";
-import { useState, useContext } from "react";
+import { useState, useContext, useEffect } from "react";
 import CartModal from "./Cartmodal";
 import { CartContext } from "../context/Cartcontext.jsx";
 
 export default function CartButton() {
-  const [isOpen, setIsOpen] = useState(false);
   const context = useContext(CartContext);
 
   if (!context) {
@@ -12,30 +11,33 @@ export default function CartButton() {
     return null;
   }
 
-  const { cart } = context;
+  const { cart, isCartOpen, openCart, closeCart } = context;
 
-  // Total de ítems
-  const totalItems = cart.reduce((acc, item) => acc + item.quantity, 0);
+  const [itemsCount, setItemsCount] = useState(0);
+
+  useEffect(() => {
+    const total = cart.reduce((acc, item) => acc + item.quantity, 0);
+    setItemsCount(total);
+  }, [cart]);
 
   return (
     <>
-      <button
-        onClick={() => {
-          console.log("🛒 Abriendo modal...");
-          setIsOpen(true);
-        }}
-        className="relative text-2xl hover:scale-110 transition-transform"
-        aria-label="Abrir carrito"
-      >
-        🛒
-        {totalItems > 0 && (
-          <span className="absolute -top-1 -right-2 bg-red-500 text-white text-xs rounded-full w-5 h-5 flex items-center justify-center">
-            {totalItems}
-          </span>
-        )}
-      </button>
+      <div className="cart-button-wrapper">
+        <button
+          onClick={openCart}
+          className="relative text-2xl hover:scale-110 transition-transform"
+          aria-label="Abrir carrito"
+        >
+          🛒
+          {itemsCount > 0 && (
+            <span className="absolute -top-1 -right-2 bg-red-500 text-white text-xs rounded-full w-5 h-5 flex items-center justify-center">
+              {itemsCount}
+            </span>
+          )}
+        </button>
+      </div>
 
-      <CartModal isOpen={isOpen} closeModal={() => setIsOpen(false)} />
+      <CartModal isOpen={isCartOpen} closeModal={closeCart} />
     </>
   );
 }
