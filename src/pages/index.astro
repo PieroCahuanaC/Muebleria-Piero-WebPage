@@ -1,4 +1,5 @@
 ---
+// src/pages/index.astro
 import { supabase } from "../lib/supabase";
 import Layout from "../layouts/Layout.astro";
 import Productos from "../components/Productos";
@@ -10,9 +11,6 @@ import WhatsappCallAction from "../components/WhatsappCallAction.astro";
 import CarritoWrapper from "../components/CarritoWrapper.jsx";
 
 const { data, error } = await supabase.from("Products").select("*");
-
-console.log("Productos:", data);
-console.log("Error:", error);
 
 const pageTitle = "Inicio";
 ---
@@ -31,9 +29,10 @@ const pageTitle = "Inicio";
     Todo lo que buscas para comprar fácil
     <span class="font-bold"> y sin complicaciones.</span>
   </h2>
+
   <Benefits />
   <WhatsappCallAction />
 
-  <!-- ✅ Isla React unificada -->
+  <!-- ✅ Isla React directamente funcional -->
   <CarritoWrapper client:load />
 </Layout>

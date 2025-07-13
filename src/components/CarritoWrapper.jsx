@@ -1,3 +1,4 @@
+// src/components/CarritoWrapper.jsx
 import { CartProvider } from "../context/Cartcontext.jsx";
 import CartButton from "./Cartbutton.jsx";
 import ProductOverview from "./ProductOverview.jsx";
