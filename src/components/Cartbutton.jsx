@@ -20,21 +20,38 @@ export default function CartButton() {
     setItemsCount(total);
   }, [cart]);
 
+  useEffect(() => {
+    const storedMessage = localStorage.getItem("addedProductMessage");
+    if (storedMessage) {
+      openCart(); // ✅ Abre el carrito automáticamente
+  
+      // Limpiar el mensaje después de unos segundos
+      setTimeout(() => {
+        localStorage.removeItem("addedProductMessage");
+      }, 3000);
+    }
+  }, []);
+  
   return (
     <>
       <div className="cart-button-wrapper">
-        <button
-          onClick={openCart}
-          className="relative text-2xl hover:scale-110 transition-transform"
-          aria-label="Abrir carrito"
-        >
-          🛒
-          {itemsCount > 0 && (
-            <span className="absolute -top-1 -right-2 bg-red-500 text-white text-xs rounded-full w-5 h-5 flex items-center justify-center">
-              {itemsCount}
-            </span>
-          )}
-        </button>
+      <button
+  onClick={openCart}
+  className="relative hover:scale-110 transition-transform"
+  aria-label="Abrir carrito"
+>
+  <img
+    src="/carrito.png"
+    alt="Carrito de compras"
+    className="h-7 w-7"
+  />
+  {itemsCount > 0 && (
+    <span className="absolute -top-1 -right-2 bg-red-500 text-white text-xs rounded-full w-5 h-5 flex items-center justify-center">
+      {itemsCount}
+    </span>
+  )}
+</button>
+
       </div>
 
       <CartModal isOpen={isCartOpen} closeModal={closeCart} />

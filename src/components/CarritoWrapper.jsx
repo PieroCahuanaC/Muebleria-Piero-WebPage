@@ -8,12 +8,10 @@ export default function CarritoWrapper({ id }) {
     <CartProvider>
       {id ? (
         <>
-          <CartButton />
+          
           <ProductOverview id={id} />
         </>
-      ) : (
-        <CartButton />
-      )}
+      ) : null}
     </CartProvider>
   );
 }

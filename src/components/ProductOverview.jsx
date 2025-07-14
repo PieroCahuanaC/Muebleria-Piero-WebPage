@@ -41,7 +41,7 @@ const ProductOverview = ({ id }) => {
 
   const handleAddToCart = () => {
     if (!product) return;
-
+  
     const newProduct = {
       id: product.id_product,
       name: product.name,
@@ -49,12 +49,18 @@ const ProductOverview = ({ id }) => {
       imageSrc: product.images?.[0]?.image_url || "/placeholder.jpg",
       quantity: quantity,
     };
-
+  
     console.log("🛒 Enviando producto al carrito:", newProduct);
     addToCart(newProduct);
-    openCart(); // ✅ Abre el modal automáticamente
-    
+  
+    // 🧠 Guardar mensaje en localStorage
+    localStorage.setItem("addedProductMessage", newProduct.name);
+  
+    // 🔁 Recargar la página
+    window.location.reload();
   };
+  
+  
 
   return (
     <div>
