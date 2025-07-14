@@ -1,7 +1,7 @@
 ---
 import Footer from "../components/Footer.astro";
 import Navbar from "../components/Navbar.astro";
-
+import { CartProvider } from "../context/Cartcontext.jsx";
 const { pageTitle } = Astro.props;
 ---
 
@@ -15,9 +15,11 @@ const { pageTitle } = Astro.props;
     <title>{pageTitle}</title>
   </head>
   <body>
+    <CartProvider>
     <Navbar />
     <slot />
     <Footer />
+    </CartProvider>
   </body>
 </html>
 
