@@ -1,22 +1,25 @@
 "use client";
-import { createContext, useEffect, useState } from "react";
+import { createContext, useState, useEffect } from "react";
 
 export const CartContext = createContext();
 
 export function CartProvider({ children }) {
-  const [cart, setCart] = useState([]);
+  // ✅ Estado inicial cargado directamente desde localStorage
+  const getInitialCart = () => {
+    if (typeof window !== "undefined") {
+      const storedCart = localStorage.getItem("cart");
+      return storedCart ? JSON.parse(storedCart) : [];
+    }
+    return [];
+  };
+
+  const [cart, setCart] = useState(getInitialCart);
   const [isCartOpen, setIsCartOpen] = useState(false);
 
   const openCart = () => setIsCartOpen(true);
   const closeCart = () => setIsCartOpen(false);
 
-  useEffect(() => {
-    const storedCart = localStorage.getItem("cart");
-    if (storedCart) {
-      setCart(JSON.parse(storedCart));
-    }
-  }, []);
-
+  // ✅ Guarda el carrito en localStorage cada vez que cambia
   useEffect(() => {
     localStorage.setItem("cart", JSON.stringify(cart));
   }, [cart]);
@@ -46,7 +49,15 @@ export function CartProvider({ children }) {
 
   return (
     <CartContext.Provider
-      value={{ cart, addToCart, removeFromCart, clearCart, openCart, closeCart, isCartOpen }}
+      value={{
+        cart,
+        addToCart,
+        removeFromCart,
+        clearCart,
+        openCart,
+        closeCart,
+        isCartOpen,
+      }}
     >
       {children}
     </CartContext.Provider>
