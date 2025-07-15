@@ -48,17 +48,18 @@ const ProductOverview = ({ id }) => {
       price: product.price,
       imageSrc: product.images?.[0]?.image_url || "/placeholder.jpg",
       quantity: quantity,
+      fake_price: product.fake_price,
     };
   
-    console.log("🛒 Enviando producto al carrito:", newProduct);
     addToCart(newProduct);
   
-    // 🧠 Guardar mensaje en localStorage
-    localStorage.setItem("addedProductMessage", newProduct.name);
+    // ✅ Guardar intención de abrir el carrito
+    localStorage.setItem("openCartOnLoad", "true");
   
-    // 🔁 Recargar la página
-    window.location.reload();
+    // ✅ Redirigir sin recargar completamente
+    window.location.reload(); // o a la página actual, si estás en `/productos/[id]`
   };
+  
   
   
 

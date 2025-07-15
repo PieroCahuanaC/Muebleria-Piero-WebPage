@@ -1,3 +1,4 @@
+// Cartbutton.jsx
 "use client";
 import { useState, useContext, useEffect } from "react";
 import CartModal from "./Cartmodal";
@@ -21,16 +22,14 @@ export default function CartButton() {
   }, [cart]);
 
   useEffect(() => {
-    const storedMessage = localStorage.getItem("addedProductMessage");
-    if (storedMessage) {
-      openCart(); // ✅ Abre el carrito automáticamente
+    const shouldOpen = localStorage.getItem("openCartOnLoad");
   
-      // Limpiar el mensaje después de unos segundos
-      setTimeout(() => {
-        localStorage.removeItem("addedProductMessage");
-      }, 3000);
+    if (shouldOpen === "true") {
+      openCart(); // ✅ Abre modal SOLO cuando fue intencional
+      localStorage.removeItem("openCartOnLoad"); // Limpia para evitar futuras aperturas
     }
   }, []);
+  
   
   return (
     <>

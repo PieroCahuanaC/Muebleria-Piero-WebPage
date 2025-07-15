@@ -1,0 +1,17 @@
+---
+// src/pages/checkout.astro
+import Layout from "../layouts/Layout.astro";
+import CheckoutWrapper from "../components/CheckoutWrapper.jsx";
+import Benefits from "../components/Benefits.astro";
+
+const pageTitle = "Finalizar pedido";
+---
+
+<Layout pageTitle={pageTitle}>
+  <CheckoutWrapper client:only="react" />
+  <h2 class="text-2xl sm:text-3xl md:text-4xl font-light text-center mt-20 mb-20">
+    Todo lo que buscas para comprar fácil
+    <span class="font-bold"> y sin complicaciones.</span>
+  </h2>
+  <Benefits />
+</Layout>
