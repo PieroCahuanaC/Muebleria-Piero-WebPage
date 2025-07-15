@@ -9,6 +9,9 @@ export default function Checkout() {
   const [phone, setPhone] = useState("");
   const [address, setAddress] = useState("");
   const [notes, setNotes] = useState("");
+  const isValidPhone = (phone) => /^\d{6,15}$/.test(phone); // mínimo 6, máximo 15 cifras
+
+  const [isSending, setIsSending] = useState(false);
 
   if (!cart || cart.length === 0) {
     return <p className="text-center mt-10 text-lg">Tu carrito está vacío.</p>;
@@ -20,15 +23,30 @@ export default function Checkout() {
   );
 
   const handleSubmit = () => {
+    if (isSending) return;
+  
     if (!name || !phone) {
       alert("Por favor, completa tu nombre y teléfono.");
       return;
     }
-
+  
+    if (!isValidPhone(phone)) {
+        alert("El número de teléfono debe contener solo números.");
+        return;
+      }
+    
+      if (name.length > 50 || phone.length > 20 || notes.length > 200) {
+        alert("Verifica que los campos no sean excesivamente largos.");
+        return;
+      }
+      
+  
+    setIsSending(true); // 🚫 Bloquea múltiples envíos
+  
     const cartItemsText = cart.map(item =>
       `• ${item.name} (x${item.quantity}) — S/. ${item.price * item.quantity}`
     ).join("\n");
-
+  
     const message = `Hola, quiero hacer un pedido desde la tienda web:\n\n` +
       `Nombre: ${name}\n` +
       `Teléfono: ${phone}\n` +
@@ -36,12 +54,15 @@ export default function Checkout() {
       `Notas: ${notes || "Ninguna"}\n\n` +
       `Productos seleccionados:\n${cartItemsText}\n\n` +
       `Total a pagar: S/. ${subtotal.toFixed(2)}`;
-
+  
     const whatsappLink = `https://wa.me/51978983030?text=${encodeURIComponent(message)}`;
-
+  
     window.open(whatsappLink, "_blank");
+  
     clearCart();
+    setIsSending(false); // ✅ Habilita el botón nuevamente
   };
+  
 
   return (
     <div className="max-w-3xl mx-auto p-6 bg-white shadow-md mt-10 rounded-lg">
@@ -99,6 +120,8 @@ export default function Checkout() {
         />
         <input
           type="tel"
+          inputMode="numeric"
+          pattern="[0-9]*"
           placeholder="Número de teléfono"
           className="w-full border p-2 rounded"
           value={phone}
@@ -121,11 +144,13 @@ export default function Checkout() {
 
       {/* Botón WhatsApp */}
       <button
-        className="w-full bg-green-600 text-white py-3 rounded font-semibold hover:bg-green-700 transition"
-        onClick={handleSubmit}
-      >
-        Confirmar y enviar por WhatsApp
-      </button>
+  className="w-full bg-green-600 text-white py-3 rounded font-semibold hover:bg-green-700 transition disabled:opacity-50"
+  onClick={handleSubmit}
+  disabled={isSending}
+>
+  {isSending ? "Enviando..." : "Confirmar y enviar por WhatsApp"}
+</button>
+
     </div>
   );
 }
