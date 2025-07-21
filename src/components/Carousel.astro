@@ -12,8 +12,8 @@
           alt="..."
         />
         <!-- Botón sobre la imagen -->
-        <a href="/">
-          <buttonZ
+        <a href="/categorias/dormitorio">
+          <button
             id="verMasBtn"
             class="absolute bottom-10 left-1/2 transform -translate-x-1/2 bg-transparent border-2 border-black font-bold text-black px-4 py-2 text-xs sm:text-sm md:text-base lg:text-lg xl:text-xl px-6 py-3 lg:px-8 lg:py-4 cursor-pointer"
           >
@@ -61,7 +61,7 @@
           class="block absolute top-1/2 left-1/2 w-full -translate-x-1/2 -translate-y-1/2"
           alt="..."
         />
-        <a href="/">
+        <a href="/categorias/dormitorio">
           <button
             id="verMasBtn2"
             class="absolute bottom-10 left-1/2 transform -translate-x-1/2 bg-transparent border-2 border-black font-bold text-black px-4 py-2 text-xs sm:text-sm md:text-base lg:text-lg xl:text-xl px-6 py-3 lg:px-8 lg:py-4 cursor-pointer"
@@ -111,7 +111,7 @@
           class="block absolute top-1/2 left-1/2 w-full -translate-x-1/2 -translate-y-1/2"
           alt="..."
         />
-        <a href="/">
+        <a href="/categorias/dormitorio">
           <button
             id="verMasBtn3"
             class="absolute bottom-10 left-1/2 transform -translate-x-1/2 bg-transparent border-2 border-black font-bold text-black px-4 py-2 text-xs sm:text-sm md:text-base lg:text-lg xl:text-xl px-6 py-3 lg:px-8 lg:py-4 cursor-pointer transform -translate-x-1/2 -translate-y-1/2 bg-black/50"
@@ -155,6 +155,34 @@
         window.addEventListener("resize", adjustButtonPosition);
       </script>
     </div>
+
+    <script>
+      const carousel = document.querySelector('#default-carousel');
+      let touchStartX = 0;
+      let touchEndX = 0;
+    
+      function handleGesture() {
+        if (touchEndX < touchStartX - 50) {
+          // Swipe hacia la izquierda
+          carousel.querySelector('[data-carousel-next]').click();
+        }
+        if (touchEndX > touchStartX + 50) {
+          // Swipe hacia la derecha
+          carousel.querySelector('[data-carousel-prev]').click();
+        }
+      }
+    
+      carousel.addEventListener('touchstart', e => {
+        touchStartX = e.changedTouches[0].screenX;
+      });
+    
+      carousel.addEventListener('touchend', e => {
+        touchEndX = e.changedTouches[0].screenX;
+        handleGesture();
+      });
+    </script>
+    
+
     <!-- Slider indicators -->
     <div
       class="flex absolute bottom-5 left-1/2 z-30 space-x-3 -translate-x-1/2"
