@@ -1,8 +1,6 @@
 ---
 const pageTitle = "Login";
-import Layout from "../../layouts/Layout.astro";
+import LoginPage from "../../pages/admin/LoginPage.jsx";
 ---
 
-<Layout pageTitle={pageTitle}>
-  <Login />
-</Layout>
+<LoginPage client:only="react" />
