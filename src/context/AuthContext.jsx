@@ -1,23 +1,31 @@
-
-//Authcontext.jsx
-import { createContext, useState, useContext } from "react";
+import { createContext, useState, useContext, useEffect } from "react";
 import { supabase } from "../lib/supabase";
 
-const AuthContext = createContext(null); //Created context for auth
-
-
-//For use the different states of the app, we need to create a Context Provider
-//Is useful to share data between components
-//And to avoid prop drilling
-
-
-//The shared data is:
-//login
-//logout
-//isLoading
+const AuthContext = createContext(null);
 
 export function AuthProvider({ children }) {
-  const [isLoading, setIsLoading] = useState(false);
+  const [user, setUser] = useState(null);
+  const [loading, setLoading] = useState(true); // loading general
+  const [isLoading, setIsLoading] = useState(false); // loading al hacer login
+
+  // Cargar sesión al inicio
+  useEffect(() => {
+    const getSession = async () => {
+      const { data: { session } } = await supabase.auth.getSession();
+      console.log("Sesión al cargar:", session);
+      setUser(session?.user ?? null);
+      setLoading(false);
+    };
+
+    getSession();
+
+    const { data: subscription } = supabase.auth.onAuthStateChange((_event, session) => {
+      setUser(session?.user ?? null);
+    });
+
+    return () => subscription?.subscription?.unsubscribe();
+  }, []);
+  
 
   const login = async (email, password) => {
     setIsLoading(true);
@@ -33,11 +41,14 @@ export function AuthProvider({ children }) {
 
   const logout = async () => {
     await supabase.auth.signOut();
+    setUser(null); // importante para que reaccione inmediatamente
   };
 
   return (
     <AuthContext.Provider
       value={{
+        user,
+        loading,
         isLoading,
         login,
         logout,
@@ -48,5 +59,4 @@ export function AuthProvider({ children }) {
   );
 }
 
-//This is created by the reason of envolve the components which need to auth
 export const useAuth = () => useContext(AuthContext);
