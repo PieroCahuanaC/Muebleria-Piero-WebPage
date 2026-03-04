@@ -1,48 +1,65 @@
-# Astro Starter Kit: Basics
+# 🪑 Mueblería Piero
 
-```sh
-npm create astro@latest -- --template basics
-```
+E-commerce de muebles para el hogar con catálogo por categorías, carrito de compras y checkout integrado con WhatsApp.
 
-[![Open in StackBlitz](https://developer.stackblitz.com/img/open_in_stackblitz.svg)](https://stackblitz.com/github/withastro/astro/tree/latest/examples/basics)
-[![Open with CodeSandbox](https://assets.codesandbox.io/github/button-edit-lime.svg)](https://codesandbox.io/p/sandbox/github/withastro/astro/tree/latest/examples/basics)
-[![Open in GitHub Codespaces](https://github.com/codespaces/badge.svg)](https://codespaces.new/withastro/astro?devcontainer_path=.devcontainer/basics/devcontainer.json)
+🔗 **Sitio en producción:** [muebleriapiero-mu.vercel.app](https://muebleriapiero-mu.vercel.app/)
 
-> 🧑‍🚀 **Seasoned astronaut?** Delete this file. Have fun!
+## Características
 
-![just-the-basics](https://github.com/withastro/astro/assets/2244813/a0a5533c-a856-4198-8470-2d67b1d7c554)
+- **Catálogo por categorías** — Dormitorio, Cocina y Comedor, Oficina
+- **Carrito de compras** — Agregar, modificar cantidades y eliminar productos
+- **Checkout por WhatsApp** — Proceso de compra rápido sin necesidad de registro
+- **Panel de administración** — Gestión de productos y contenido
+- **Diseño responsive** — Adaptado para móviles, tablets y desktop
 
-## 🚀 Project Structure
+## Tech Stack
 
-Inside of your Astro project, you'll see the following folders and files:
+- **Framework:** [Astro](https://astro.build/) con SSR (Server-Side Rendering)
+- **UI:** [React](https://react.dev/) + [Tailwind CSS](https://tailwindcss.com/)
+- **Base de datos:** [Supabase](https://supabase.com/)
+- **Deploy:** [Vercel](https://vercel.com/)
+- **Componentes:** Headless UI, Heroicons, Lucide React, Flowbite
+
+## Estructura del proyecto
 
 ```text
-/
-├── public/
-│   └── favicon.svg
-├── src/
-│   ├── layouts/
-│   │   └── Layout.astro
-│   └── pages/
-│       └── index.astro
-└── package.json
+src/
+├── components/    # Componentes React y Astro
+├── context/       # Context providers (carrito, auth, etc.)
+├── layouts/       # Layouts base
+├── lib/           # Utilidades y cliente Supabase
+├── pages/         # Rutas de la aplicación
+│   ├── admin/     # Panel de administración
+│   ├── api/       # Endpoints API
+│   ├── categorias/# Páginas por categoría
+│   ├── products/  # Detalle de productos
+│   └── ...
+├── styles/        # Estilos globales
+└── assets/        # Imágenes y recursos estáticos
 ```
 
-To learn more about the folder structure of an Astro project, refer to [our guide on project structure](https://docs.astro.build/en/basics/project-structure/).
+## Instalación
 
-## 🧞 Commands
+```bash
+# Clonar el repositorio
+git clone https://github.com/PieroCahuanaC/Muebleria-Piero-WebPage.git
+cd Muebleria-Piero-WebPage
 
-All commands are run from the root of the project, from a terminal:
+# Instalar dependencias
+npm install
 
-| Command                   | Action                                           |
-| :------------------------ | :----------------------------------------------- |
-| `npm install`             | Installs dependencies                            |
-| `npm run dev`             | Starts local dev server at `localhost:4321`      |
-| `npm run build`           | Build your production site to `./dist/`          |
-| `npm run preview`         | Preview your build locally, before deploying     |
-| `npm run astro ...`       | Run CLI commands like `astro add`, `astro check` |
-| `npm run astro -- --help` | Get help using the Astro CLI                     |
+# Configurar variables de entorno
+cp .env.example .env.local
+# Editar .env.local con tus credenciales de Supabase
 
-## 👀 Want to learn more?
+# Iniciar servidor de desarrollo
+npm run dev
+```
 
-Feel free to check [our documentation](https://docs.astro.build) or jump into our [Discord server](https://astro.build/chat).
+El servidor estará disponible en `http://localhost:4321`.
+
+## Scripts disponibles
+
+- `npm run dev` — Servidor de desarrollo
+- `npm run build` — Build de producción
+- `npm run preview` — Preview del build local
