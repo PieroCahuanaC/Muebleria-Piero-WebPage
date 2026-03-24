@@ -55,7 +55,7 @@ export default function Checkout() {
       `Productos seleccionados:\n${cartItemsText}\n\n` +
       `Total a pagar: S/. ${subtotal.toFixed(2)}`;
   
-    const whatsappLink = `https://wa.me/51978983030?text=${encodeURIComponent(message)}`;
+    const whatsappLink = `https://wa.me/51961715903?text=${encodeURIComponent(message)}`;
   
     window.open(whatsappLink, "_blank");
   
